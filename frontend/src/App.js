@@ -58,8 +58,16 @@ export default function App() {
   const padWidth = Math.max(2, String(items.length || 0).length);
 
   const generateOne = useCallback(async (prompt) => {
-    const res = await axios.post(`${API}/generate`, { prompt });
-    return res.data.image;
+    const { data } = await axios.post(`${API}/jobs`, { prompt });
+    const jobId = data.job_id;
+    const deadline = Date.now() + 5 * 60 * 1000; // 5 min safety cap
+    while (Date.now() < deadline) {
+      await new Promise((r) => setTimeout(r, 2500));
+      const { data: job } = await axios.get(`${API}/jobs/${jobId}`);
+      if (job.status === "done") return job.image;
+      if (job.status === "failed") throw new Error(job.error || "Generation failed");
+    }
+    throw new Error("Timed out waiting for image");
   }, []);
 
   const setItemStatus = (index, patch) => {

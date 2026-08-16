@@ -10,6 +10,8 @@ Personal single-page tool: paste a numbered list of image prompts, generate one 
 
 ## Implemented (2026-06)
 - Numbered-prompt parsing (tolerant of `1.`, `1)`, `1:` etc.)
+- Background-job + polling architecture (POST /api/jobs → GET /api/jobs/{id}) to avoid Cloudflare 502 on slow (~60-75s) generations
+- Server converts xAI output (JPEG) to true PNG via Pillow
 - Sequential generation with live progress + Stop button
 - Per-item states: queued / generating / done / failed
 - Error handling: failed prompt shows red FAILED marker + reason, batch continues (verified)
@@ -18,8 +20,8 @@ Personal single-page tool: paste a numbered list of image prompts, generate one 
 - Server key-missing warning banner + `/api/config`
 
 ## Status / Notes
-- **UNVERIFIED**: actual image generation not tested end-to-end — requires a valid `XAI_API_KEY` (user did not have one yet). All other flows verified via UI.
-- To enable: put key in `backend/.env` `XAI_API_KEY=...`, restart backend. Get key at https://accounts.x.ai (Console → API Keys), requires credits.
+- VERIFIED end-to-end: real image generated, rendered in UI, and returned as true PNG. XAI_API_KEY live with account credits.
+- Each image takes ~60-75s (xAI model speed); large batches run for many minutes, sequentially by design.
 
 ## Backlog
 - P1: Aspect-ratio / resolution selector
