@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+    :root {
+        --background: 240 6% 5%;
+        --foreground: 0 0% 98%;
+        --card: 240 5% 8%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 5% 8%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 100%;
+        --primary-foreground: 0 0% 0%;
+        --secondary: 240 4% 12%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 4% 12%;
+        --muted-foreground: 0 0% 55%;
+        --accent: 240 4% 14%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 4 100% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 240 4% 16%;
+        --input: 240 4% 16%;
+        --ring: 0 0% 60%;
+        --radius: 0.25rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Workspace dot texture for the output canvas */
+.dot-canvas {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+/* Failed marker diagonal hatch */
+.hatch {
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255, 59, 48, 0.08),
+        rgba(255, 59, 48, 0.08) 8px,
+        transparent 8px,
+        transparent 16px
+    );
+}
+
+::selection {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Custom thin scrollbar */
+.thin-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+    background: hsl(240 4% 20%);
+    border-radius: 0;
+}
+.thin-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(240 4% 30%);
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-up {
+    animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

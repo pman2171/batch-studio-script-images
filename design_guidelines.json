@@ -1,0 +1,82 @@
+{
+  "theme": "Dark Mode (Swiss & High-Contrast)",
+  "typography": {
+    "headings": "Chivo",
+    "body_and_ui": "JetBrains Mono",
+    "instructions": "Use Chivo for main branding and primary headings. Use JetBrains Mono for the textarea, numbered lists, progress indicators, and UI buttons. This creates a technical, 'scripting' environment feel. Ensure tight letter spacing (tracking-tight) for headings."
+  },
+  "colors": {
+    "background": "#09090B",
+    "panel_background": "#121214",
+    "foreground": "#FAFAFA",
+    "border": "#27272A",
+    "accent_primary": "#FFFFFF",
+    "accent_foreground": "#000000",
+    "accent_progress": "#3B82F6",
+    "accent_error": "#FF3B30",
+    "instructions": "Rely strictly on this monochrome palette with high-contrast elements. Color is function only. Use pure white buttons with black text for primary actions. Use Blue ONLY for progress/active states. Use Red ONLY for failures."
+  },
+  "visual_enhancers": {
+    "background_texture": "Use a subtle CSS dot pattern (e.g., `radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)`) in the Right Panel (Output area) to make it feel like a workspace/canvas.",
+    "surface_strategy": "Retro-Futurism / Terminal vibe for the left pane (flat, no shadows, 1px borders), and Grid Borders for the right pane feed."
+  },
+  "component_name": [
+    "Button",
+    "Textarea",
+    "ScrollArea",
+    "Sonner"
+  ],
+  "grids": {
+    "instructions": "No complex CSS grids for the main shell, just a split layout. Inside the output pane, use a simple 1-column stack (flex-col) for images so they act as a feed. The feed items should use `gap-12`."
+  },
+  "layouts": {
+    "structure": "Split-Screen Architecture. `h-screen w-full flex overflow-hidden`.",
+    "left_panel": "Input Panel (w-1/3 or w-[400px] max). Fixed, border-r border-border. Contains the title, the massive textarea in the middle (flex-1), and the 'Generate All' button pinned at the bottom with heavy padding.",
+    "right_panel": "Output Panel (flex-1). Scrollable (`overflow-y-auto`). Vertical stack of generated images with generous spacing (`p-12`). Contains 'Download All as ZIP' floating at the top right."
+  },
+  "component_rules": {
+    "textarea": "Must not look like a standard input. Make it `bg-transparent border-none focus:ring-0 resize-none h-full w-full text-base leading-loose p-6`. It should feel like a built-in code editor.",
+    "buttons": "Brutalist / Technical. `rounded-sm` or `rounded-none`. 1px borders. Primary action (Generate All) should be heavy (`bg-white text-black font-bold py-6 text-lg`).",
+    "image_card": "No generic shadcn cards. Flat image container `max-w-2xl mx-auto`. Beneath the image, a stark 1px bordered toolbar with the Image Number (left) and Actions (Download, Regenerate - right) as stark icon buttons.",
+    "progress_indicator": "Instead of a standard loading spinner, use a stark 'filling' progress bar anchored to the top of the right panel, or dynamically replacing the 'Generate' button text (e.g., 'GENERATING 3/60...').",
+    "failed_marker": "If an image fails, render a red bordered box with a diagonal slash background or just high-contrast red text: 'FAILED: [Prompt]', and a 'Retry' button."
+  },
+  "motion": {
+    "rules": "Use Framer Motion for the appearance of generated images (subtle slide up `y: 20` and fade in `opacity: 0` to `1`). Progress bar should animate smoothly. Avoid bouncy/playful springs; use stiff, technical ease-outs."
+  },
+  "accessibility": {
+    "contrast": "Ensure minimum 4.5:1 ratio. Provide explicit hover states (e.g., `hover:bg-white/10`) on all interactable elements.",
+    "testing": "All interactive and key informational elements MUST include a `data-testid` attribute (e.g., `data-testid='generate-button'`, `data-testid='prompt-textarea'`, `data-testid='image-card-1'`)."
+  },
+  "media": {
+    "icons": "Use Phosphor Icons (`@phosphor-icons/react`) for a technical, duotone, or crisp line weight look.",
+    "images": []
+  },
+  "3d_libraries": {
+    "instructions": "None required for this 2D batch processing tool."
+  },
+  "instructions_to_main_agent": [
+    "Install necessary packages: `yarn add @phosphor-icons/react framer-motion sonner jszip file-saver @fontsource/chivo @fontsource/jetbrains-mono`.",
+    "Do NOT build a traditional landing page. This is a full-screen hybrid web app tool.",
+    "Update `tailwind.config.js` with the specified fonts (Chivo, JetBrains Mono) and color variables (Dark mode by default).",
+    "Left panel is STRICTLY for the script (textarea). It must parse the text correctly line by line, extracting the number and the prompt (e.g., matching '1. A cat' -> {id: 1, prompt: 'A cat'}).",
+    "Right panel is STRICTLY for the output feed.",
+    "Implement sequential generation: Map through the parsed prompts, call the API in sequence (mocked if no real backend endpoint is available for Grok), wait for the response, update state (showing the new image in the feed), and then proceed to the next.",
+    "For zip download, use JSZip and file-saver to bundle all generated image blobs/URLs.",
+    "Do not use complete transparent background in header, overlays, or any surface that has content under it."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "You MUST NOT apply universal transition. Eg: `transition: all`. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add `.App { text-align: center; }` in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like robot, brain, lightbulb for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Use `sonner` for toasts. Sonner component are located in `/app/src/components/ui/sonner.tsx` (if available, otherwise install it)."
+  ]
+}
